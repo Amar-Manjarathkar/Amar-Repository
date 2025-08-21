@@ -1,14 +1,27 @@
 class Solution:
     def getPairs(self, arr):
-        seen = set(arr)
-        res = set()
+        arr.sort()               # Step 1: sort array → O(n log n)
+        res = []
+        n = len(arr)
         
-        zero_count = arr.count(0)  # count how many zeros
-
-        for num in arr:
-            if -num in seen:
-                if num == 0 and zero_count < 2:
-                    continue   # skip if only one zero
-                res.add(tuple(sorted((num, -num))))
+        left, right = 0, n - 1   # Step 2: two pointers
         
-        return [list(pair) for pair in sorted(res)]
+        while left < right:
+            s = arr[left] + arr[right]
+            
+            if s == 0:
+                res.append([arr[left], arr[right]])   # valid pair
+                
+                # Step 3: skip duplicates
+                left_val, right_val = arr[left], arr[right]
+                while left < right and arr[left] == left_val:
+                    left += 1
+                while left < right and arr[right] == right_val:
+                    right -= 1
+                    
+            elif s < 0:
+                left += 1
+            else:
+                right -= 1
+                
+        return res
