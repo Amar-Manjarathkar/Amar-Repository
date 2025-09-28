@@ -1,0 +1,16 @@
+class Solution:
+    def firstElementKTime(self, arr,k):
+        # code here
+        frequency_map= {}
+        
+        
+        for num in arr:
+            frequency_map[num] = frequency_map.get(num,0)+1
+            
+            if frequency_map[num] == k:
+                return num
+        return -1
+            
+        
+    
+  
